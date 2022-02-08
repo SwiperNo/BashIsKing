@@ -58,7 +58,7 @@ sudo rm -rf /mnt/disc/
 sudo yum clean all
 
 #enable previous repos
-find /etc/yum.repos.d/ -type f -name '*.repo' | xargs sed -i "s/enabled=0/enabled=1/g"
+sudo find /etc/yum.repos.d/ -type f -name '*.repo' | sudo xargs sed -i "s/enabled=0/enabled=1/g"
 
 
 #Check for more updates
