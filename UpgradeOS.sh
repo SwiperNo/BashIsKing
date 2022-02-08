@@ -1,23 +1,24 @@
 #Install script for 7.5 - > 7.9 Upgrade
 
 #Create mount point
-mkdir -p /mnt/disc/
+sudo mkdir -p /mnt/disc/
 
 #Mount ISO
-mount -o loop RHEL7.9.iso /mnt/disc/
+sudo mount -o loop RHEL7.9.iso /mnt/disc/
+
+#Verify iso was mounted
+mount | grep -i "RHEL7.9.iso"
 
 
 #Disable current repos and changing enabled to 0.
 #Find all files endingin .repo and perform sed on each file
-find /etc/yum.repos.d/ -type f -name '*.repo' | xargs sed -i "s/enabled=1/enabled=0/g"
+find /etc/yum.repos.d/ -type f -name '*.repo' | xargs -p sed -i "s/enabled=1/enabled=0/g"
+
+#Verify all was disabled
+cat /etc/yum.repos.d/* | grep -i "enabled=1"
 
 #Create custom repo file 
-cat << EOF >>/etc/yum.repos.d/reporhel7dvd.repo
-
-
-enabled=1
-baseurl=file:///mnt/disc/
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release.
+sudo bash -c 'cat << EOF >>/etc/yum.repos.d/reporhel7dvd.repo
 
 [InstallMedia]
 name=DVD for Red Hat Enterprise Linux 7.9 Server
@@ -29,35 +30,35 @@ enabled=1
 baseurl=file:///mnt/disc/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
-EOF
+EOF'
 
 
 #Update file permissions
-chmod 0644 /etc/yum.repos.d/reporhel7dvd.repo
+sudo chmod 0644 /etc/yum.repos.d/reporhel7dvd.repo
 
 
 #Clear yum cache
-yum clean all
+sudo yum clean all
 
 #Verify enabled repolist
-yum repolist enabled
+sudo yum repolist enabled
 
 
 #perform system upgrade
-yum update 
+sudo yum update 
 
 
 #Clean up 
-rm /etc/yum.repos.d/reporhel7dvd.repo
-umount /mnt/disc/
-rm -rf /mnt/disc/*
+sudo rm /etc/yum.repos.d/reporhel7dvd.repo
+sudo umount /mnt/disc/
+sudo rm -rf /mnt/disc/*
 
 #Clean yum repo
-yum clean all
+sudo yum clean all
 
 #enable previous repos
-find /tmp/conf -type f -name '*.repo' | xargs sed -i "s/enabled=0/enabled=1/g"
+find /etc/yum.repos.d/ -type f -name '*.repo' | xargs sed -i "s/enabled=0/enabled=1/g"
 
 
 #Check for more updates
-yum check-update
+sudo yum check-update
