@@ -17,9 +17,9 @@ find /etc/yum.repos.d/ -type f -name '*.repo' | xargs -p sed -i "s/enabled=1/ena
 #Verify all was disabled
 cat /etc/yum.repos.d/* | grep -i "enabled=1"
 
+
 #Create custom repo file 
 sudo bash -c 'cat << EOF >>/etc/yum.repos.d/reporhel7dvd.repo
-
 [InstallMedia]
 name=DVD for Red Hat Enterprise Linux 7.9 Server
 mediaid=1359576196.686790
@@ -29,6 +29,7 @@ cost=500
 enabled=1
 baseurl=file:///mnt/disc/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+#gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 EOF'
 
@@ -45,13 +46,13 @@ sudo yum repolist enabled
 
 
 #perform system upgrade
-sudo yum update 
+sudo yum update -y
 
 
 #Clean up 
 sudo rm /etc/yum.repos.d/reporhel7dvd.repo
 sudo umount /mnt/disc/
-sudo rm -rf /mnt/disc/*
+sudo rm -rf /mnt/disc/
 
 #Clean yum repo
 sudo yum clean all
@@ -62,3 +63,7 @@ find /etc/yum.repos.d/ -type f -name '*.repo' | xargs sed -i "s/enabled=0/enable
 
 #Check for more updates
 sudo yum check-update
+
+
+#if no errors for sudo yum check-update
+sudo yum update -y
