@@ -12,7 +12,7 @@ mount | grep -i "RHEL7.9.iso"
 
 #Disable current repos and changing enabled to 0.
 #Find all files endingin .repo and perform sed on each file
-find /etc/yum.repos.d/ -type f -name '*.repo' | xargs -p sed -i "s/enabled=1/enabled=0/g"
+find /etc/yum.repos.d/ -type f -name '*.repo' | xargs sed -i "s/enabled=1/enabled=0/g"
 
 #Verify all was disabled
 cat /etc/yum.repos.d/* | grep -i "enabled=1"
