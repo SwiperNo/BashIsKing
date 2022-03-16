@@ -61,10 +61,3 @@ ssh -vvv "$user@$ip"  >> /tmp/sshlog 2>&1
 
 
 
-
-
-
-
-
-
-
