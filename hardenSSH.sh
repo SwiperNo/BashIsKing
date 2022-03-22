@@ -31,19 +31,19 @@ sudo su root
 
 
 ###Update Ciphers
-sudo echo "#Cipers updated: $now" >> /etc/ssh/ssh_config
+sudo echo "#Cipers updated: $now" >> /etc/ssh/sshd_config
 sudo echo "Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com" >> /etc/ssh/ssh_config
 sudo echo "" >> /etc/ssh/ssh_config
 
 
 ##Update kexalgoritms
-sudo echo "#kexAlgorithms updated: $now" >> /etc/ssh/ssh_config
+sudo echo "#kexAlgorithms updated: $now" >> /etc/ssh/sshd_config
 sudo echo "KexAlgorithms diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256" >> /etc/ssh/ssh_config
 sudo echo "" >> /etc/ssh/ssh_config
 
 
 ##Update MACs
-sudo echo "#MACs updated: $now" >> /etc/ssh/ssh_config
+sudo echo "#MACs updated: $now" >> /etc/ssh/sshd_config
 sudo echo "MACs umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512" >> /etc/ssh/ssh_config
 sudo echo "" >> /etc/ssh/ssh_config
 
